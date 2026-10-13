@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cosmic Explorer | Solar System</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ---------- GENERAL STYLING ---------- */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #050816;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* ---------- NAVIGATION BAR ---------- */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 8, 22, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        nav {
+            min-height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 21px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .logo span {
+            color: #8c7bff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 13px;
+            color: #b7bfd7;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #a99bff;
+        }
+
+        /* ---------- HERO SECTION ---------- */
+
+        .hero {
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 75% 50%,
+                    rgba(95, 55, 180, 0.22),
+                    transparent 45%),
+                radial-gradient(ellipse at 20% 20%,
+                    rgba(26, 75, 160, 0.15),
+                    transparent 40%);
+        }
+
+        .hero-content {
+            max-width: 650px;
+            padding: 90px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tagline {
+            display: inline-block;
+            color: #b6a9ff;
+            border: 1px solid rgba(169, 155, 255, 0.4);
+            background: rgba(140, 123, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(38px, 6vw, 72px);
+            line-height: 1.2;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #a99bff;
+        }
+
+        .hero p {
+            max-width: 550px;
+            color: #aab4d0;
+            font-size: 15px;
+            line-height: 1.9;
+            margin-bottom: 35px;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            padding: 14px 27px;
+            background: linear-gradient(135deg, #8c7bff, #6246ea);
+            color: white;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+            box-shadow: 0 8px 30px rgba(110, 85, 255, 0.25);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(110, 85, 255, 0.4);
+        }
+
+        .hero-visual {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 330px;
+            height: 330px;
+            display: grid;
+            place-items: center;
+        }
+
+        .sun {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%,
+                #fff5bc,
+                #ffb13b 45%,
+                #f56b18 75%);
+            box-shadow:
+                0 0 40px rgba(255, 177, 59, 0.6),
+                0 0 100px rgba(255, 120, 30, 0.25);
+            animation: glow 4s ease-in-out infinite alternate;
+        }
+
+        .orbit {
+            position: absolute;
+            width: 310px;
+            height: 310px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            transform: rotate(-25deg);
+        }
+
+        .orbit::after {
+            content: "";
+            position: absolute;
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            background: #71a8ff;
+            box-shadow: 0 0 25px #5794ff;
+            top: 50%;
+            left: -11px;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 35px rgba(255, 177, 59, 0.5);
+            }
+
+            to {
+                box-shadow: 0 0 70px rgba(255, 177, 59, 0.8);
+            }
+        }
+
+        /* ---------- SECTION HEADINGS ---------- */
+
+        .section {
+            padding: 90px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-heading .small-title {
+            color: #a99bff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .section-heading h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(25px, 4vw, 38px);
+            margin-bottom: 18px;
+        }
+
+        .section-heading p {
+            color: #aab4d0;
+            max-width: 600px;
+            margin: auto;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        /* ---------- PLANET CARDS ---------- */
+
+        .planet-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .planet-card {
+            background: linear-gradient(145deg,
+                rgba(25, 31, 61, 0.9),
+                rgba(12, 17, 39, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 18px;
+            padding: 30px 22px;
+            text-align: center;
+            transition: 0.35s ease;
+            overflow: hidden;
+        }
+
+        .planet-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(169, 155, 255, 0.6);
+            box-shadow: 0 15px 45px rgba(85, 65, 180, 0.15);
+        }
+
+        .planet-image {
+            height: 145px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .planet {
+            border-radius: 50%;
+            position: relative;
+            transition: transform 0.4s ease;
+        }
+
+        .planet-card:hover .planet {
+            transform: scale(1.12) rotate(12deg);
+        }
+
+        /* Individual planet designs */
+
+        .mercury {
+            width: 65px;
+            height: 65px;
+            background: radial-gradient(circle at 30% 30%,
+                #d8d4cc, #777783 65%, #444451);
+            box-shadow: inset -8px -6px 15px #292938,
+                0 0 25px rgba(200, 200, 200, 0.1);
+        }
+
+        .venus {
+            width: 85px;
+            height: 85px;
+            background: radial-gradient(circle at 30% 25%,
+                #ffe0a0, #d78b45 60%, #814326);
+            box-shadow: inset -12px -8px 20px #754326;
+        }
+
+        .earth {
+            width: 95px;
+            height: 95px;
+            background:
+                radial-gradient(ellipse at 65% 30%,
+                    transparent 0 18%,
+                    rgba(70, 170, 95, 0.9) 19% 28%,
+                    transparent 29%),
+                radial-gradient(circle at 35% 30%,
+                    #76d7ff, #1765cf 55%, #082a75);
+            box-shadow: inset -13px -10px 20px #071a50,
+                0 0 25px rgba(60, 140, 255, 0.25);
+        }
+
+        .mars {
+            width: 75px;
+            height: 75px;
+            background: radial-gradient(circle at 30% 25%,
+                #ffb28b, #cf573d 60%, #752b29);
+            box-shadow: inset -12px -8px 18px #632522;
+        }
+
+        .jupiter {
+            width: 125px;
+            height: 125px;
+            background: repeating-linear-gradient(
+                0deg,
+                #bd805c 0px,
+                #f2d0a4 12px,
+                #c88a64 22px,
+                #e9bd8c 33px
+            );
+            box-shadow: inset -15px -10px 25px #75472e;
+            overflow: hidden;
+        }
+
+        .jupiter::after {
+            content: "";
+            position: absolute;
+            width: 27px;
+            height: 17px;
+            border-radius: 50%;
+            background: #a94f39;
+            top: 57%;
+            left: 56%;
+        }
+
+        .saturn {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 25%,
+                #f9e5ae, #c4a06c 60%, #806441);
+            box-shadow: inset -12px -8px 20px #705433;
+        }
+
+        .saturn::after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 40px;
+            border: 9px solid #d7c092;
+            border-radius: 50%;
+            top: 30px;
+            left: -25px;
+            transform: rotate(-20deg);
+            box-shadow: 0 0 8px rgba(255, 225, 170, 0.25);
+        }
+
+        .uranus {
+            width: 88px;
+            height: 88px;
+            background: radial-gradient(circle at 30% 25%,
+                #d4ffff, #69d4df 60%, #237f99);
+            box-shadow: inset -12px -8px 20px #24677a;
+        }
+
+        .neptune {
+            width: 88px;
+            height: 88px;
+            background: radial-gradient(circle at 30% 25%,
+                #8ebaff, #2458d8 60%, #112878);
+            box-shadow: inset -12px -8px 20px #0d1a60,
+                0 0 20px rgba(70, 115, 255, 0.15);
+        }
+
+        .planet-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .planet-card p {
+            color: #aab4d0;
+            font-size: 12px;
+            line-height: 1.8;
+            min-height: 66px;
+        }
+
+        .planet-type {
+            display: inline-block;
+            margin-top: 18px;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #b7aaff;
+            background: rgba(140, 123, 255, 0.1);
+            border: 1px solid rgba(140, 123, 255, 0.2);
+            padding: 7px 12px;
+            border-radius: 30px;
+        }
+
+        /* ---------- SPACE FACTS ---------- */
+
+        .facts-section {
+            background:
+                radial-gradient(ellipse at top,
+                    rgba(60, 50, 140, 0.18),
+                    transparent 60%),
+                #080b1c;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .fact-card {
+            padding: 35px 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.025);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .fact-card:hover {
+            background: rgba(140, 123, 255, 0.07);
+            transform: translateY(-5px);
+        }
+
+        .fact-icon {
+            font-size: 35px;
+            margin-bottom: 20px;
+        }
+
+        .fact-card h3 {
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .fact-card p {
+            font-size: 13px;
+            color: #aab4d0;
+            line-height: 1.8;
+        }
+
+        /* ---------- ABOUT SECTION ---------- */
+
+        .about-box {
+            max-width: 850px;
+            margin: auto;
+            text-align: center;
+            padding: 50px 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            background: linear-gradient(135deg,
+                rgba(140, 123, 255, 0.08),
+                rgba(35, 65, 140, 0.06));
+        }
+
+        .about-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .about-box p {
+            color: #aab4d0;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+            background: #03050e;
+        }
+
+        footer p {
+            color: #8d96b3;
+            font-size: 12px;
+            line-height: 2;
+        }
+
+        footer span {
+            color: #a99bff;
+        }
+
+        /* ---------- RESPONSIVE DESIGN ---------- */
+
+        @media (max-width: 1000px) {
+            .hero-visual {
+                right: -100px;
+                opacity: 0.35;
+            }
+
+            .hero-content {
+                max-width: 650px;
+            }
+
+            .planet-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                padding: 20px 0;
+            }
+
+            .nav-links {
+                gap: 16px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                min-height: 550px;
+            }
+
+            .hero-content {
+                padding: 70px 0;
+            }
+
+            .hero-visual {
+                right: -150px;
+                opacity: 0.2;
+            }
+
+            .planet-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .facts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 65px 0;
+            }
+
+            .about-box {
+                padding: 35px 20px;
+            }
+
+            .about-box h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">COSMIC<span>.</span></a>
+
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#planets">Planets</a></li>
+                    <li><a href="#facts">Space Facts</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- HERO SECTION -->
+
+    <section class="hero" id="home">
+
+        <div class="container">
+            <div class="hero-content">
+
+                <div class="tagline">✦ YOUR JOURNEY THROUGH SPACE</div>
+
+                <h1>
+                    Explore the<br>
+                    <span>Solar System</span>
+                </h1>
+
+                <p>
+                    Discover the wonders of our cosmic neighborhood.
+                    From the blazing Sun to the distant icy worlds,
+                    explore the eight planets that orbit our star.
+                </p>
+
+                <a href="#planets" class="primary-btn">
+                    Discover the Planets &nbsp; →
+                </a>
+
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="orbit"></div>
+            <div class="sun"></div>
+        </div>
+
+    </section>
+
+
+    <!-- PLANETS SECTION -->
+
+    <section class="section" id="planets">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <div class="small-title">Our Cosmic Neighbors</div>
+
+                <h2>Meet the Planets</h2>
+
+                <p>
+                    Eight unique worlds, each with its own atmosphere,
+                    landscape, and fascinating mysteries.
+                </p>
+
+            </div>
+
+
+            <div class="planet-grid">
+
+
+                <!-- MERCURY -->
+
+                <article class="planet-card">
+
+                    <div class="planet-image">
+                        <div class="planet mercury"></div>
+                    </div>
+
+                    <h3>01. Mercury</h3>
+
+                    <p>
+                        The smallest planet and the closest to the Sun.
+                        Its surface is covered with ancient craters.
+                    </p>
+
+                    <span class="planet-type">Terrestrial Planet</span>
+
+                </article>
+
+
+                <!-- VENUS -->
+
+                <article class="planet-card">
+
+                    <div class="planet-image">
+                        <div class="planet venus"></div>
+                    </div>
+
+                    <h3>02. Venus</h3>
+
+                    <p>
+                        A world of thick clouds and extreme heat.
+                        Venus is the hottest planet in our solar system.
+                    </p>
+
+                    <span class="planet-type">Terrestrial Planet</span>
+
+                </article>
+
+
+                <!-- EARTH -->
+
+                <article class="planet-card">
+
+                    <div class="planet-image">
+                        <div class="planet earth"></div>
+                    </div>
+
+                    <h3>03. Earth</h3>
+
+                    <p>
+                        Our home planet, rich in liquid water and life.
+                        Earth is the only world currently known to support life.
+                    </p>
+
+                    <span class="planet-type">Our Home</span>
+
+                </article>
+
+
+                <!-- MARS -->
+
+                <article class="planet-card">
+
+                    <div class="planet-image">
+                        <div class="planet mars"></div>
+                    </div>
+
+                    <h3>04. Mars</h3>
+
+                    <p>
+                        Known as the Red Planet, Mars has dusty deserts,
+                        enormous volcanoes, and ancient river valleys.
+                    </p>
+
+                    <span class="planet-type">Terrestrial Planet</span>
+
+                </article>
+
+
+                <!-- JUPITER -->
+
+                <article class="planet-card">
+
+                    <div class="planet-image">
+                        <div class="planet jupiter"></div>
+                    </div>
+
+                    <h3>05. Jupiter</h3>
+
+                    <p>
+                        The largest planet in our solar system.
+                        Its Great Red Spot is a gigantic atmospheric storm.
+                    </p>
+
+                    <span class="planet-type">Gas Giant</span>
+
+                </article>
+
+
+                <!-- SATURN -->
+
+                <article class="planet-card">
+
+                    <div class="planet-image">
+                        <div class="planet saturn"></div>
+                    </div>
+
+                    <h3>06. Saturn</h3>
+
+                    <p>
+                        Famous for its spectacular rings made mostly
+                        of countless pieces of ice and rocky material.
+                    </p>
+
+                    <span class="planet-type">Gas Giant</span>
+
+                </article>
+
+
+                <!-- URANUS -->
+
+                <article class="planet-card">
+
+                    <div class="planet-image">
+                        <div class="planet uranus"></div>
+                    </div>
+
+                    <h3>07. Uranus</h3>
+
+                    <p>
+                        An ice giant with a blue-green appearance.
+                        It rotates on its side compared with most planets.
+                    </p>
+
+                    <span class="planet-type">Ice Giant</span>
+
+                </article>
+
+
+                <!-- NEPTUNE -->
+
+                <article class="planet-card">
+
+                    <div class="planet-image">
+                        <div class="planet neptune"></div>
+                    </div>
+
+                    <h3>08. Neptune</h3>
+
+                    <p>
+                        The farthest planet from the Sun.
+                        It is a cold, distant world with powerful winds.
+                    </p>
+
+                    <span class="planet-type">Ice Giant</span>
+
+                </article>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SPACE FACTS SECTION -->
+
+    <section class="section facts-section" id="facts">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <div class="small-title">Beyond Imagination</div>
+
+                <h2>A Universe of Wonders</h2>
+
+                <p>
+                    Some amazing facts that make our solar system
+                    such a fascinating place to explore.
+                </p>
+
+            </div>
+
+
+            <div class="facts-grid">
+
+                <div class="fact-card">
+
+                    <div class="fact-icon">☀️</div>
+
+                    <h3>The Sun</h3>
+
+                    <p>
+                        The Sun contains more than 99.8% of the total
+                        mass of the solar system and provides the energy
+                        that supports life on Earth.
+                    </p>
+
+                </div>
+
+
+                <div class="fact-card">
+
+                    <div class="fact-icon">🌍</div>
+
+                    <h3>Our Home</h3>
+
+                    <p>
+                        Earth is approximately 150 million kilometers
+                        from the Sun. Sunlight takes about 8 minutes
+                        and 20 seconds to reach us.
+                    </p>
+
+                </div>
+
+
+                <div class="fact-card">
+
+                    <div class="fact-icon">🌌</div>
+
+                    <h3>Our Galaxy</h3>
+
+                    <p>
+                        Our solar system is part of the Milky Way,
+                        a galaxy containing billions of stars and
+                        many other planetary systems.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT SECTION -->
+
+    <section class="section" id="about">
+
+        <div class="container">
+
+            <div class="about-box">
+
+                <h2>Our Cosmic Journey</h2>
+
+                <p>
+                    The solar system formed approximately 4.6 billion
+                    years ago from a giant cloud of gas and dust.
+                    At its center, the Sun formed, while the remaining
+                    material gradually came together to create planets,
+                    moons, asteroids, and comets.
+                    <br><br>
+                    Today, space exploration continues to reveal new
+                    discoveries about our planetary neighbors and
+                    our place in the universe.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="container">
+
+            <p>
+                Designed with curiosity and a love for space.
+            </p>
+
+            <p>
+                © 2026 <span>Cosmic Explorer</span> | Explore Beyond the Stars ✦
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>
